@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Python Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0a0e1a;--surface:#111827;--surface2:#1a2236;--border:#1e2d45;--a1:#38bdf8;--a2:#a78bfa;--a3:#34d399;--a4:#fb923c;--text:#e2e8f0;--muted:#64748b;--code:#0d1424;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{margin:0;padding:0;box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--text);font-family:'Syne',system-ui,sans-serif;overflow-x:hidden}
+.hero{padding:70px 24px 40px;text-align:center;background:radial-gradient(ellipse 80% 60% at 20% 40%,rgba(56,189,248,.12),transparent 60%),radial-gradient(ellipse 60% 50% at 80% 60%,rgba(167,139,250,.1),transparent 60%)}
+.badge{display:inline-block;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);color:var(--a1);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;padding:6px 18px;border-radius:999px;margin-bottom:22px}
+h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;line-height:1.1;background:linear-gradient(135deg,#fff 30%,var(--a1) 70%,var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{margin-top:14px;color:var(--muted);letter-spacing:.04em}
+.nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:0 24px 44px}
+.nav a{text-decoration:none;padding:8px 20px;border-radius:999px;font-size:.85rem;font-weight:600;border:1px solid;transition:filter .2s}
+.nav a:hover{filter:brightness(1.3)}
+.t1{color:var(--a1);border-color:rgba(56,189,248,.4);background:rgba(56,189,248,.07)}
+.t2{color:var(--a2);border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.07)}
+.t3{color:var(--a3);border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.07)}
+.t4{color:var(--a4);border-color:rgba(251,146,60,.4);background:rgba(251,146,60,.07)}
+.container{max-width:1000px;margin:0 auto;padding:0 20px 70px}
+.section{margin-bottom:56px}
+.sh{display:flex;align-items:center;gap:16px;margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0}
+.st{font-size:1.6rem;font-weight:800}
+.s1{--c:var(--a1);--cb:rgba(56,189,248,.15)}.s2{--c:var(--a2);--cb:rgba(167,139,250,.15)}.s3{--c:var(--a3);--cb:rgba(52,211,153,.15)}.s4{--c:var(--a4);--cb:rgba(251,146,60,.15)}
+.num{background:var(--cb);color:var(--c)}.st{color:var(--c)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:18px;min-width:0}
+.card h3{font-size:.9rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px;color:var(--c)}
+.card p{color:#94a3b8;line-height:1.7;font-size:.93rem}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:var(--surface2);padding:1px 6px;border-radius:5px;color:var(--a1)}
+.cw{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.cl{background:var(--surface2);padding:6px 14px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+pre{background:var(--code);padding:16px 18px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7;color:var(--text)}
+.kw{color:#818cf8}.fn{color:#38bdf8}.str{color:#86efac}.num2{color:#fb923c}.cm{color:#64748b;font-style:italic}.bi{color:#f472b6}
+.note,.warn{padding:12px 16px;border-radius:10px;font-size:.85rem;line-height:1.6;margin:12px 0}
+.note{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:#6ee7b7}
+.warn{background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);color:#fdba74}
+.tw{overflow-x:auto;margin:12px 0;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{background:var(--surface2);padding:10px 16px;text-align:left;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:10px 16px;border-bottom:1px solid rgba(30,45,69,.6);color:#94a3b8;font-family:'JetBrains Mono',monospace;font-size:.82rem;white-space:nowrap}
+td.d{font-family:'Syne',sans-serif;white-space:normal}
+tr:last-child td{border-bottom:none}
+td:first-child{color:var(--a1)}
+.yes{color:#34d399}.no{color:#f87171}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.g2{grid-template-columns:1fr}}
+footer{text-align:center;padding:28px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Python Programming</div>
+  <h1>Complete Notes</h1>
+  <p>Loops • If Condition • File Handling • Functions</p>
+</div>
+
+<nav class="nav">
+  <a href="#loops" class="t1">① Loops</a>
+  <a href="#if" class="t2">② If Condition</a>
+  <a href="#files" class="t3">③ File Handling</a>
+  <a href="#funcs" class="t4">④ Functions</a>
+</nav>
+
+<div class="container">
+
+<section id="loops" class="section s1">
+  <div class="sh"><div class="num">①</div><div class="st">Loops</div></div>
+
+  <div class="card"><h3>What is a Loop?</h3>
+    <p>A loop repeats a block of code multiple times. Python has two main loop types: <strong>for</strong> and <strong>while</strong>.</p></div>
+
+  <div class="g2">
+    <div class="card"><h3>for Loop — Syntax</h3>
+      <div class="cw"><div class="cl">python</div><pre>for variable in sequence:
+    # code block
+
+# Iterate a list
+fruits = ['apple', 'mango']
+for fruit in fruits:
+    print(fruit)</pre></div>
+      <div class="cw"><div class="cl">using range()</div><pre>for i in range(1, 6):
+    print(i)  # 1 2 3 4 5
+
+# With step
+for i in range(0, 10, 2):
+    print(i)  # 0 2 4 6 8</pre></div>
+    </div>
+
+    <div class="card"><h3>while Loop</h3>
+      <div class="cw"><div class="cl">python</div><pre>count = 1
+while count &lt;= 5:
+    print('Count:', count)
+    count += 1</pre></div>
+      <div class="warn">⚠️ Always update the variable inside while — otherwise it runs forever (infinite loop)!</div>
+      <div class="cw"><div class="cl">else with loop</div><pre>for i in range(3):
+    print(i)
+else:
+    print('Done!')</pre></div>
+    </div>
+  </div>
+
+  <div class="card"><h3>break &amp; continue</h3>
+    <div class="g2">
+      <div class="cw"><div class="cl">break — exit loop</div><pre>for i in range(10):
+    if i == 5:
+        break
+    print(i)
+# prints 0 1 2 3 4</pre></div>
+      <div class="cw"><div class="cl">continue — skip iteration</div><pre>for i in range(6):
+    if i == 3:
+        continue
+    print(i)
+# prints 0 1 2 4 5</pre></div>
+    </div>
+  </div>
+
+  <div class="card"><h3>Nested Loops</h3>
+    <div class="cw"><div class="cl">multiplication table</div><pre>for i in range(1, 4):
+    for j in range(1, 4):
+        print(i, 'x', j, '=', i * j)</pre></div>
+    <div class="note">✅ Nested loops are fine for small data (tables, patterns, grids). For very large data they get slow (O(n²)), so consider list comprehensions or <code>itertools.product</code>.</div>
+    <div class="note">✅ Tip: Use <code>enumerate()</code> to get index + value: <code>for i, val in enumerate(items):</code></div>
+  </div>
+
+  <div class="card"><h3>Quick Reference</h3>
+    <div class="tw"><table>
+      <tr><th>Statement</th><th>Purpose</th><th>Example</th></tr>
+      <tr><td>for x in list</td><td class="d">Iterate over sequence</td><td>for n in [1,2,3]</td></tr>
+      <tr><td>for i in range(n)</td><td class="d">Repeat n times</td><td>for i in range(5)</td></tr>
+      <tr><td>while condition</td><td class="d">Loop until false</td><td>while x &lt; 10</td></tr>
+      <tr><td>break</td><td class="d">Exit the loop</td><td>if x==5: break</td></tr>
+      <tr><td>continue</td><td class="d">Skip this iteration</td><td>if x==3: continue</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="if" class="section s2">
+  <div class="sh"><div class="num">②</div><div class="st">If Condition</div></div>
+
+  <div class="card"><h3>What is an If Statement?</h3>
+    <p>Conditional statements let your program make decisions based on whether a condition is True or False.</p></div>
+
+  <div class="g2">
+    <div class="card"><h3>if / elif / else</h3>
+      <div class="cw"><div class="cl">python</div><pre>marks = 75
+if marks &gt;= 90:
+    print('Grade: A')
+elif marks &gt;= 75:
+    print('Grade: B')
+elif marks &gt;= 60:
+    print('Grade: C')
+else:
+    print('Grade: F')
+# Output: Grade: B</pre></div>
+    </div>
+    <div class="card"><h3>Logical Operators</h3>
+      <div class="cw"><div class="cl">and / or / not</div><pre>age = 20
+has_id = True
+
+# and — both must be True
+if age &gt;= 18 and has_id:
+    print('Entry allowed')
+
+# or — at least one True
+if age &gt;= 18 or has_id:
+    print('May enter')
+
+# not — reverse condition
+if not has_id:
+    print('No ID!')</pre></div>
+    </div>
+  </div>
+
+  <div class="card"><h3>Comparison Operators</h3>
+    <div class="tw"><table>
+      <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
+      <tr><td>==</td><td class="d">Equal to</td><td>5 == 5</td><td class="yes">True</td></tr>
+      <tr><td>!=</td><td class="d">Not equal</td><td>5 != 3</td><td class="yes">True</td></tr>
+      <tr><td>&gt;</td><td class="d">Greater than</td><td>7 &gt; 4</td><td class="yes">True</td></tr>
+      <tr><td>&lt;</td><td class="d">Less than</td><td>3 &lt; 9</td><td class="yes">True</td></tr>
+      <tr><td>&gt;=</td><td class="d">Greater or equal</td><td>5 &gt;= 5</td><td class="yes">True</td></tr>
+      <tr><td>&lt;=</td><td class="d">Less or equal</td><td>4 &lt;= 6</td><td class="yes">True</td></tr>
+    </table></div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><h3>Nested if</h3>
+      <div class="cw"><div class="cl">python</div><pre>num = 15
+if num &gt; 0:
+    if num % 2 == 0:
+        print('Positive Even')
+    else:
+        print('Positive Odd')
+else:
+    print('Negative')
+# Output: Positive Odd</pre></div>
+    </div>
+    <div class="card"><h3>Ternary (One-line if)</h3>
+      <div class="cw"><div class="cl">python</div><pre># value_if_true if cond else value_if_false
+x = 10
+result = 'Even' if x % 2 == 0 else 'Odd'
+print(result)  # Even
+
+# Membership check
+name = 'Raj'
+if name in ['Raj', 'Priya']:
+    print('Found!')</pre></div>
+    </div>
+  </div>
+</section>
+
+<section id="files" class="section s3">
+  <div class="sh"><div class="num">③</div><div class="st">File Handling</div></div>
+
+  <div class="card"><h3>What is File Handling?</h3>
+    <p>File handling lets you create, read, write, and manage files using Python’s built-in <code>open()</code> function.</p></div>
+
+  <div class="card"><h3>File Modes</h3>
+    <div class="tw"><table>
+      <tr><th>Mode</th><th>Meaning</th><th>Creates file?</th><th>Overwrites?</th></tr>
+      <tr><td>'r'</td><td class="d">Read (default)</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>'w'</td><td class="d">Write</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+      <tr><td>'a'</td><td class="d">Append</td><td class="yes">Yes</td><td class="no">No</td></tr>
+      <tr><td>'x'</td><td class="d">Create (error if exists)</td><td class="yes">Yes</td><td class="no">No</td></tr>
+      <tr><td>'r+'</td><td class="d">Read + Write</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>'rb'</td><td class="d">Read binary</td><td class="no">No</td><td class="no">No</td></tr>
+    </table></div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><h3>Writing a File</h3>
+      <div class="cw"><div class="cl">recommended — with statement</div><pre>with open('data.txt', 'w') as f:
+    f.write('Hello, Python!\n')
+    f.write('File handling!\n')
+# File closes automatically</pre></div>
+      <div class="note">✅ Always use <code>with</code> — it auto-closes the file even if an error occurs!</div>
+    </div>
+    <div class="card"><h3>Reading a File</h3>
+      <div class="cw"><div class="cl">python</div><pre>with open('data.txt', 'r') as f:
+    # Entire file as string
+    content = f.read()
+
+    # All lines as list
+    lines = f.readlines()
+
+# Loop through lines (efficient)
+with open('data.txt') as f:
+    for line in f:
+        print(line.strip())</pre></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><h3>Append to File</h3>
+      <div class="cw"><div class="cl">python</div><pre>with open('data.txt', 'a') as f:
+    f.write('New line!\n')
+# Does NOT delete existing content</pre></div>
+    </div>
+    <div class="card"><h3>Check File Exists</h3>
+      <div class="cw"><div class="cl">python</div><pre>import os
+
+if os.path.exists('data.txt'):
+    print('File found!')
+else:
+    print('Not found!')
+
+# Delete a file
+os.remove('data.txt')</pre></div>
+    </div>
+  </div>
+
+  <div class="card"><h3>CSV File Handling</h3>
+    <div class="g2">
+      <div class="cw"><div class="cl">write csv</div><pre>import csv
+
+with open('students.csv', 'w',
+          newline='') as f:
+    w = csv.writer(f)
+    w.writerow(['Name', 'Mark'])
+    w.writerow(['Raj', 85])</pre></div>
+      <div class="cw"><div class="cl">read csv</div><pre>import csv
+
+with open('students.csv') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print(row)
+# ['Name', 'Mark']
+# ['Raj', '85']</pre></div>
+    </div>
+  </div>
+</section>
+
+<section id="funcs" class="section s4">
+  <div class="sh"><div class="num">④</div><div class="st">Functions</div></div>
+
+  <div class="card"><h3>What is a Function?</h3>
+    <p>A function is a reusable block of code that performs a specific task. Functions help avoid repetition and keep code clean and organized.</p></div>
+
+  <div class="g2">
+    <div class="card"><h3>Define &amp; Call</h3>
+      <div class="cw"><div class="cl">python</div><pre>def greet():
+    print('Hello!')
+
+greet()  # Output: Hello!</pre></div>
+    </div>
+    <div class="card"><h3>Parameters &amp; Default Values</h3>
+      <div class="cw"><div class="cl">python</div><pre>def greet(name='World'):
+    print('Hello,', name)
+
+greet()         # Hello, World
+greet('Priya')  # Hello, Priya</pre></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><h3>return Statement</h3>
+      <div class="cw"><div class="cl">python</div><pre>def add(a, b):
+    return a + b
+
+result = add(5, 3)
+print(result)  # 8
+
+# Return multiple values
+def min_max(lst):
+    return min(lst), max(lst)
+
+lo, hi = min_max([3, 1, 7, 2])  # 1, 7</pre></div>
+    </div>
+    <div class="card"><h3>*args &amp; **kwargs</h3>
+      <div class="cw"><div class="cl">*args — variable positional</div><pre>def total(*args):
+    return sum(args)
+
+print(total(1, 2, 3))     # 6
+print(total(10, 20, 30))  # 60</pre></div>
+      <div class="cw"><div class="cl">**kwargs — variable keyword</div><pre>def info(**kwargs):
+    for k, v in kwargs.items():
+        print(k, ':', v)
+
+info(name='Raj', age=21)</pre></div>
+    </div>
+  </div>
+
+  <div class="card"><h3>Lambda Functions</h3>
+    <div class="g2">
+      <div class="cw"><div class="cl">anonymous one-line functions</div><pre>square = lambda x: x ** 2
+print(square(5))   # 25
+
+add = lambda a, b: a + b
+print(add(3, 4))   # 7</pre></div>
+      <div class="cw"><div class="cl">common use — sort with key</div><pre>students = [
+    ('Raj', 85),
+    ('Priya', 92),
+    ('Arun', 78)
+]
+students.sort(key=lambda x: x[1])
+# Arun(78), Raj(85), Priya(92)</pre></div>
+    </div>
+  </div>
+
+  <div class="card"><h3>Scope — Local vs Global</h3>
+    <div class="cw"><div class="cl">python</div><pre>x = 10   # Global variable
+
+def show():
+    x = 99   # Local — different from global x
+    print(x)  # 99
+
+show()
+print(x)   # 10 (global unchanged)
+
+# Use 'global' to modify global variable
+def change():
+    global x
+    x = 50
+
+change()
+print(x)   # 50</pre></div>
+    <div class="note">✅ Best Practice: Avoid global variables. Pass values via parameters and return results instead.</div>
+  </div>
+
+  <div class="card"><h3>Function Quick Reference</h3>
+    <div class="tw"><table>
+      <tr><th>Syntax</th><th>Description</th></tr>
+      <tr><td>def name():</td><td class="d">Define a function</td></tr>
+      <tr><td>def name(a, b):</td><td class="d">With parameters</td></tr>
+      <tr><td>def name(a=10):</td><td class="d">Default parameter</td></tr>
+      <tr><td>return value</td><td class="d">Return a result</td></tr>
+      <tr><td>def name(*args):</td><td class="d">Variable positional arguments</td></tr>
+      <tr><td>def name(**kwargs):</td><td class="d">Variable keyword arguments</td></tr>
+      <tr><td>lambda x: x+1</td><td class="d">Anonymous one-line function</td></tr>
+    </table></div>
+  </div>
+</section>
+
+</div>
+
+<footer>Python Notes • Loops | If Condition | File Handling | Functions</footer>
+
+<script>
+// Auto syntax highlighting: write plain code in <pre>, colors are added here.
+(function () {
+  var re = /(#.*)|('[^'\n]*'|"[^"\n]*")|\b(for|in|while|if|elif|else|break|continue|def|return|lambda|import|with|as|global|and|or|not|True|False)\b|\b(print|range|open|sum|min|max)\b|\b(\d+)\b|\b([A-Za-z_]\w*)(?=\()/g;
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  document.querySelectorAll('pre').forEach(function (pre) {
+    var html = esc(pre.textContent).replace(re, function (m, c, s, k, b, n, f) {
+      if (c) return '<span class="cm">' + c + '</span>';
+      if (s) return '<span class="str">' + s + '</span>';
+      if (k) return '<span class="kw">' + k + '</span>';
+      if (b) return '<span class="bi">' + b + '</span>';
+      if (n) return '<span class="num2">' + n + '</span>';
+      if (f) return '<span class="fn">' + f + '</span>';
+      return m;
+    });
+    pre.innerHTML = html;
+  });
+})();
+</script>
+</body>
+</html>
